@@ -10,7 +10,7 @@ public class DiningPhilosophers {
 		philosophers=new Philosophers[numberOfPhilosophers];
 		for(int i=0; i<philosophers.length; ++i){
 			chopsticks[i]=new Object();
-			if(i==0){ //if it's the last philosopher, have him pick up the right fork first!
+			if(i==numberOfPhilosophers-1){ //if it's the last philosopher, have him pick up the right fork first!
 				Integer right=new Integer(0);
 				Integer left=new Integer(4);
 				  philosophers[i]=new Philosophers(i,right,left); //mod by number of diners to wrap around the table! 5%5=0, right stick of last diner will be 0
