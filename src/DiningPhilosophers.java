@@ -2,15 +2,24 @@
 public class DiningPhilosophers {
 	private Object[] chopsticks;
 	private Philosophers[] philosophers;
-	private Integer numberOfPhilosophers;
+	private int numberOfPhilosophers;
 	
 	public DiningPhilosophers(int numberOfPhilosophers){
 		this.numberOfPhilosophers=numberOfPhilosophers;
 		chopsticks=new Object[numberOfPhilosophers]; //there are as many forks as philosophers
 		philosophers=new Philosophers[numberOfPhilosophers];
-		for(int i=0; i<numberOfPhilosophers; i++ ){
+		for(int i=0; i<philosophers.length; ++i){
 			chopsticks[i]=new Object();
-			philosophers[i]=new Philosophers(i,i,(i+1)%numberOfPhilosophers); //mod by number of diners to wrap around the table! 5%5=0, right stick of last diner will be 0
+			if(i==numberOfPhilosophers-1){ //if it's the last philosopher, have him pick up the right fork first!
+				Integer right=0;
+				Integer left=4;
+				  philosophers[i]=new Philosophers(i,right,left); //mod by number of diners to wrap around the table! 5%5=0, right stick of last diner will be 0
+
+			}else{
+				Integer right=((i+1)%numberOfPhilosophers);
+				Integer left=(i);
+				 philosophers[i]=new Philosophers(i,left,right);
+			}
 		}
 	}
 	
@@ -18,7 +27,6 @@ public class DiningPhilosophers {
 		for(int i=0; i<philosophers.length; i++){
 			philosophers[i].start();
 		}
-		
 		try {
 			philosophers[0].join(); //wait for this thread philosopher to finish eating
 		} catch (InterruptedException e) {
